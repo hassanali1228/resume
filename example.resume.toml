@@ -1,0 +1,148 @@
+[config]
+enable_grayscale = false
+include_mission = false
+education_first = false
+role = "sre"
+
+[profile]
+name = "Hassan Ali Amjad"
+
+[[profile.links]]
+display = "hsnali.me"
+url = "https://hsnali.me"
+favicon = "Globe"
+
+[[profile.links]]
+display = "someone"
+url = "mailto:someone"
+favicon = "EnvelopeO"
+
+[[profile.links]]
+display = "LinkedIn/hassan"
+url = "https://www.linkedin.com/in/hassan-ali-amjad/"
+favicon = "Linkedin"
+
+[[profile.links]]
+display = "911"
+favicon = "Phone"
+link = "tel:+1000"
+
+[skills]
+Languages = ["Python", "C", "C++", "SQL", "JavaScript", "Java", "Verilog", "Bash"]
+Frameworks = ["Flask", "Node.js", "MQTT", "WebSockets", "Pytest", "Pantsbuild", "Pandas"]
+Tools = ["Linux", "Redis", "Docker", "Kubernetes", "Jenkins", "Prometheus", "Grafana", "MySQL", "GCP", "Git"]
+
+[[work_experiences]]
+company = "DNAStack"
+mission = "Fueling health research: scientists united, data secure, AI optimized"
+location = "Toronto, ON"
+date_range = "Jan 2024 - Present"
+content = [
+    '''Hello'''
+]
+
+[work_experiences.title]
+sre = "Solutions Engineer Intern"
+dev = "Cloud Developer Intern"
+
+[work_experiences.order]
+sre = [0]
+dev = [0]
+
+[[work_experiences]]
+company = "Databento"
+mission = "A simpler, faster way to get market data"
+location = "Boston, MA"
+date_range = "June 2023 - Aug 2023"
+content = [
+    '''Did something''',
+    '''Did something else''',
+    '''Did something else''',
+    '''Did something else'''
+]
+
+[work_experiences.title]
+sre = "DevOps Engineer Intern"
+dev = "Software Developer Intern"
+
+[work_experiences.order]
+sre = [0, 1, 2, 3]
+dev = [3, 1, 2, 0]
+
+[[work_experiences]]
+company = "Stealth Media"
+mission = "Elevate your party experience, one game at a time"
+location = "Saskatoon, SK"
+date_range = "Sep 2022 - Dec 2022"
+content = [
+    '''Did something''',
+    '''Did something else''',
+    '''Did something else''',
+    '''Did something else'''
+]
+
+[work_experiences.title]
+sre = "Systems Engineer Intern"
+dev = "sre"
+
+[work_experiences.order]
+sre = [0, 1, 2, 3]
+dev = [0, 2, 3, 1]
+
+[[work_experiences]]
+company = "Citadel LLC"
+mission = "Drive capital to the world’s most impactful and compelling investments"
+location = "Chicago, IL"
+date_range = "Jan 2022 - Apr 2022"
+content = [
+    '''Did something''',
+    '''Did something else''',
+    '''Did something else''',
+    '''Did something else'''
+]
+
+[work_experiences.title]
+sre = "Linux Engineer Intern"
+dev = "Software Engineer Intern"
+
+[work_experiences.order]
+sre = [0, 1, 2, 3]
+dev = "sre"
+
+[[work_experiences]]
+company = "Questrade"
+mission = "Empowering Canadians to achieve financial independence"
+location = "Toronto, ON"
+date_range = "May 2021 - Aug 2021"
+content = [
+    '''Did something''',
+    '''Did something else''',
+    '''Did something else''',
+    '''Did something else'''
+]
+
+[work_experiences.title]
+sre = "Infrastructure Engineer Intern"
+dev = "sre"
+
+[work_experiences.order]
+sre = [0, 1, 2, 3]
+dev = "sre"
+
+[[projects]]
+name = "Real-Time OS for Intel DE1-SoC"
+tools = ["C", "x86 Assembly", "ARM"]
+content = [
+    '''Did something''',
+    '''Did something else'''
+]
+
+[[projects]]
+name = "Tournament Tracker"
+favicon = "link"
+url = "https://github.com/hassanali1228/Tournament-Score-Tracker"
+tools = ["Node.js", "SQL"]
+content = [
+    '''Did something else''',
+    '''Did something else'''
+]
