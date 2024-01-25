@@ -1,5 +1,5 @@
 import toml
-from latex_reserve import *
+from toml_resume.latex_reserve import *
 
 class ResumeWriter:
     def __init__(self) -> None:
@@ -19,7 +19,7 @@ class ResumeWriter:
 def add_profile(writer: ResumeWriter, profile: dict[str, str | dict[str, str]]) -> None:
     writer.add_line("\\begin{resume_header}")
     writer.add_line(
-        f"\\name{{\\textbf{{{profile['name']}}}}} \\vspace{{0.02in}}"
+        f"\\name{{{profile['name']}}} \\vspace{{0.02in}}"
     )
     writer.add_line("\\contact{")
     writer.indent()
@@ -30,7 +30,7 @@ def add_profile(writer: ResumeWriter, profile: dict[str, str | dict[str, str]]) 
         else:
             line = f"\\fa{link['favicon']}\enspace {link['display']}"
 
-        if idx != len(profile["links"]) - 1: line += " \hspace{0.3in} \\"
+        if idx != len(profile["links"]) - 1: line += " \hspace{0.25in} \\"
         else: line += " \\"
 
         writer.add_line(line)
@@ -82,7 +82,7 @@ def add_work_experience(writer: ResumeWriter, include_mission: bool, experience:
         f"{{{title_table[role]}}}"
     )
     writer.add_line(
-        f"{{{experience['location']}}} {{{experience['date_range']}}} \\vspace{{3 pt}}"
+        f"{{{experience['location']}}} {{{experience['date_range']}}} \\vspace{{3.4 pt}}"
     )
 
     order_table = parse_role_table(experience["order"])
@@ -111,15 +111,14 @@ def add_project(writer: ResumeWriter, project: dict[str, list[str]]) -> None:
     writer.add_line("\\end{subitems}")
     writer.add_line("\\end{resume_subsection}")
 
-def generator(enable_grayscale: bool, include_mission: bool, education_first: bool, role: str) -> str:
+def generator(toml_dict: dict, enable_grayscale: bool, include_mission: bool, education_first: bool, role: str) -> str:
     resume_writer = ResumeWriter()
 
-    resume_writer.latex_str += start
-
     if enable_grayscale:
-        resume_writer.latex_str += grayscale
+        resume_writer.latex_str += grayscale_start
+    else:
+        resume_writer.latex_str += start
 
-    resume_writer.latex_str += template_definitions
     resume_writer.add_line("")
 
     add_profile(resume_writer, toml_dict["profile"])
@@ -168,9 +167,12 @@ def generator(enable_grayscale: bool, include_mission: bool, education_first: bo
 
     return resume_writer.latex_str
 
-if __name__ == "__main__":
+def main():
     toml_dict = toml.load("resume.toml")
 
     print(
-        generator(**toml_dict["config"])
+        generator(toml_dict, **toml_dict["config"])
     )
+
+if __name__ == "__main__":
+    main()

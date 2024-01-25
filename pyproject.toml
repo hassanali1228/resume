@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "toml-resume"
+version = "0.1.0"
+description = "PDF parser for toml resume files"
+authors = ["Hassan Ali Amjad <h4amjad@uwaterloo.ca>"]
+readme = "README.md"
+packages = [{include = "toml_resume"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+toml = "^0.10.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+toml-resume = "toml_resume.generator:main"

@@ -5,8 +5,8 @@
 *.out
 *.synctex.gz
 *.txt
-resume.toml
 *.pdf
 *.tex
 *.venv/
 __pycache__/
+poetry.lock
