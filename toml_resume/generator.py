@@ -85,7 +85,7 @@ def add_work_experience(
     line += f" - \\normalfont {experience['mission']}}}" if include_mission else "}"
     writer.add_line(line)
 
-    writer.add_line(f"{{{experience['company']}}}")
+    writer.add_line(f"{{{title_table[role]}}}")
     writer.add_line(
         f"{{{experience['location']}}} {{{experience['date_range']}}} \\vspace{{3.2 pt}}"
     )
