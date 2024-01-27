@@ -1,43 +1,45 @@
 import toml
 from toml_resume.latex_reserve import *
 
+
 class ResumeWriter:
     def __init__(self) -> None:
         self.latex_str = ""
         self.dent = 0
-    
+
     def add_line(self, line: str) -> None:
         self.latex_str += "  " * self.dent + line + "\n"
 
-    def indent(self, value: int=1) -> None:
+    def indent(self, value: int = 1) -> None:
         self.dent += value
 
-    def dedent(self, value: int =1) -> None:
+    def dedent(self, value: int = 1) -> None:
         self.dent -= value
 
 
 def add_profile(writer: ResumeWriter, profile: dict[str, str | dict[str, str]]) -> None:
     writer.add_line("\\begin{resume_header}")
-    writer.add_line(
-        f"\\name{{{profile['name']}}} \\vspace{{0.02in}}"
-    )
+    writer.add_line(f"\\name{{{profile['name']}}} \\vspace{{0.02in}}")
     writer.add_line("\\contact{")
     writer.indent()
 
     for idx, link in enumerate(profile["links"]):
-        if 'url' in link:
+        if "url" in link:
             line = f"\\fa{link['favicon']}\enspace \href{{{link['url']}}}{{{link['display']}}}"
         else:
             line = f"\\fa{link['favicon']}\enspace {link['display']}"
 
-        if idx != len(profile["links"]) - 1: line += " \hspace{0.25in} \\"
-        else: line += " \\"
+        if idx != len(profile["links"]) - 1:
+            line += " \hspace{0.25in} \\"
+        else:
+            line += " \\"
 
         writer.add_line(line)
 
     writer.dedent()
     writer.add_line("}")
     writer.add_line("\\end{resume_header}")
+
 
 def add_skills(writer: ResumeWriter, skills: dict[str, list[str]]) -> None:
     writer.add_line("\\begin{resume_section}{Skills}")
@@ -68,29 +70,36 @@ def parse_role_table(table: dict) -> dict:
             role_table[role] = val
     return role_table
 
-def add_work_experience(writer: ResumeWriter, include_mission: bool, experience: dict[str, str | list[str] | dict[str, list[int]]], role: str) -> None:
+
+def add_work_experience(
+    writer: ResumeWriter,
+    include_mission: bool,
+    experience: dict[str, str | list[str] | dict[str, list[int]]],
+    role: str,
+) -> None:
+    title_table = parse_role_table(experience["title"])
+
     writer.add_line("\\begin{resume_employer}")
     writer.indent()
-    writer.add_line(
-        f"{{\\color{{darkblue}} {experience['company']} - \\normalfont {experience['mission']}}}"
-        if include_mission
-        else f"{{\\color{{darkblue}} {experience['company']}}}"
-    )
+    line = f"{{\\color{{darkblue}} {experience['company']}"
+    line += f" - \\normalfont {experience['mission']}}}" if include_mission else "}"
+    writer.add_line(line)
 
-    title_table = parse_role_table(experience["title"])
+    writer.add_line(f"{{{experience['company']}}}")
     writer.add_line(
-        f"{{{title_table[role]}}}"
-    )
-    writer.add_line(
-        f"{{{experience['location']}}} {{{experience['date_range']}}} \\vspace{{3.4 pt}}"
+        f"{{{experience['location']}}} {{{experience['date_range']}}} \\vspace{{3.2 pt}}"
     )
 
     order_table = parse_role_table(experience["order"])
     for idx in order_table[role]:
-        writer.add_line(f"\\item {experience['content'][idx]}")
+        try:
+            writer.add_line(f"\\item {experience['content'][idx]}")
+        except IndexError: 
+            pass # allows for easy design re-iterations without breaking the code
 
     writer.dedent()
     writer.add_line("\\end{resume_employer}")
+
 
 def add_project(writer: ResumeWriter, project: dict[str, list[str]]) -> None:
     line = "\\begin{resume_subsection} "
@@ -99,7 +108,9 @@ def add_project(writer: ResumeWriter, project: dict[str, list[str]]) -> None:
         line += f"{{\\textcolor{{darkblue}} {{{project['name']}}} "
         line += f"\color{{black}} - {tool_list}}}"
     else:
-        line += f"{{\href{{{project['url']}}}{{\\textcolor{{darkblue}}{{{project['name']}}}"
+        line += (
+            f"{{\href{{{project['url']}}}{{\\textcolor{{darkblue}}{{{project['name']}}}"
+        )
         line += f"\color{{black}} - {tool_list} \\faicon{{{project['favicon']}}}}}}}"
     writer.add_line(line)
 
@@ -111,8 +122,79 @@ def add_project(writer: ResumeWriter, project: dict[str, list[str]]) -> None:
     writer.add_line("\\end{subitems}")
     writer.add_line("\\end{resume_subsection}")
 
-def generator(toml_dict: dict, enable_grayscale: bool, include_mission: bool, education_first: bool, role: str) -> str:
+
+def add_education(writer: ResumeWriter, education: dict[str, str]) -> None:
+    writer.add_line("\\begin{resume_section}{Education}")
+    writer.indent()
+    writer.add_line("\\begin{education}")
+    writer.indent()
+
+    writer.add_line(
+        f"{{\\textcolor{{darkblue}}{{{education['school']}}} - \\normalfont {education['degree']}}}{{{education['date_range']}}}"
+    )
+
+    writer.add_line("")
+    writer.add_line("\\begin{nobulletsubitems}")
+    writer.add_line("\setlength{\itemindent}{0.25em}")
+    writer.indent()
+
+    for item in education["content"]:
+        key, val = item.values()
+        writer.add_line(f"\\item \\textbf{{\\textcolor{{darkblue}}{{{key}}}}}: {val}")
+
+    writer.dedent()
+    writer.add_line("\end{nobulletsubitems}")
+
+    writer.dedent()
+    writer.add_line("\\end{education}")
+    writer.dedent()
+    writer.add_line("\\end{resume_section}")
+
+
+def add_work_experiences(
+    writer: ResumeWriter, include_mission: bool, role: str, work_experiences: list[dict],
+):
+    writer.add_line("\\begin{resume_section}{Work Experience}")
+    writer.add_line("")
+    writer.indent()
+
+    for work_experience in work_experiences:
+        add_work_experience(writer, include_mission, work_experience, role)
+        writer.add_line("")
+
+    writer.dedent()
+    writer.add_line("\\end{resume_section}")
+
+
+def add_projects(writer: ResumeWriter, projects: list[dict]) -> None:
+    writer.add_line("\\begin{resume_section}{Personal Projects}")
+    writer.add_line("")
+    writer.indent()
+
+    for project in projects:
+        add_project(writer, project)
+        writer.add_line("")
+
+    writer.dedent()
+    writer.add_line("\\end{resume_section}")
+
+
+def generator(
+    toml_dict: dict,
+    enable_grayscale: bool,
+    include_mission: bool,
+    education_first: bool,
+    role: str,
+) -> str:
     resume_writer = ResumeWriter()
+
+    section_parser_mapping = {
+        "profile": (add_profile, resume_writer,),
+        "skills": (add_skills, resume_writer,),
+        "education": (add_education, resume_writer,),
+        "work_experiences": (add_work_experiences, resume_writer, include_mission, role),
+        "projects": (add_projects, resume_writer,),
+    }
 
     if enable_grayscale:
         resume_writer.latex_str += grayscale_start
@@ -121,58 +203,45 @@ def generator(toml_dict: dict, enable_grayscale: bool, include_mission: bool, ed
 
     resume_writer.add_line("")
 
-    add_profile(resume_writer, toml_dict["profile"])
-    resume_writer.add_line("")
+    for section, content in toml_dict.items():
+        (method, *params) = section_parser_mapping[section] # assign input variables needed for each fxn
 
-    if education_first:
-        resume_writer.latex_str += education
-    else:
-        add_skills(resume_writer, toml_dict["skills"])
+        # call each section's parser
+        method(*params, content)
         resume_writer.add_line("")
 
-    resume_writer.add_line("\\begin{resume_section}{Work Experience}")
-    resume_writer.add_line("")
-    resume_writer.indent()
 
-    for work_experience in toml_dict["work_experiences"]:
-        add_work_experience(
-            resume_writer,
-            include_mission,
-            work_experience,
-            role
-        )
-        resume_writer.add_line("")
+    # add_profile(resume_writer, toml_dict["profile"])
+    # resume_writer.add_line("")
 
-    resume_writer.dedent()
-    resume_writer.add_line("\\end{resume_section}")
+    # if education_first:
+    #     add_education(resume_writer, toml_dict["education"])
+    # else:
+    #     add_skills(resume_writer, toml_dict["skills"])
+    # resume_writer.add_line("")
 
-    resume_writer.add_line("\\begin{resume_section}{Personal Projects}")
-    resume_writer.add_line("")
-    resume_writer.indent()
+    # add_work_experiences(resume_writer, toml_dict["work_experiences"], include_mission, role)
 
-    for project in toml_dict["projects"]:
-        add_project(resume_writer, project)
-        resume_writer.add_line("")
+    # add_projects(resume_writer, toml_dict["projects"])
 
-    resume_writer.dedent()
-    resume_writer.add_line("\\end{resume_section}")
-
-    if education_first:
-        add_skills(resume_writer, toml_dict["skills"])
-        resume_writer.add_line("")
-    else:
-        resume_writer.latex_str += education
+    # if education_first:
+    #     add_skills(resume_writer, toml_dict["skills"])
+    # else:
+    #     add_education(resume_writer, toml_dict["education"])
+    # resume_writer.add_line("")
 
     resume_writer.latex_str += end
 
     return resume_writer.latex_str
 
+
 def main():
     toml_dict = toml.load("resume.toml")
+    config = toml_dict["config"]
+    del toml_dict["config"]
 
-    print(
-        generator(toml_dict, **toml_dict["config"])
-    )
+    print(generator(toml_dict, **config))
+
 
 if __name__ == "__main__":
     main()

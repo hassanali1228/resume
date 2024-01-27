@@ -71,7 +71,8 @@ urlcolor=MyLinkColor}
 \newenvironment{resume_section}[1]{
   \filbreak
   \vspace{2\secsep}
-  \textbf{\color{YellowOrange}\Large#1 \hrulefill } \textcolor{white}{\lineunder} \vspace{-7pt}
+  \textbf{\color{YellowOrange}\Large#1 }
+  \textcolor{darkblue}{\lineunder}
   \begin{tabbedsection}{\secsep}
 }{\end{tabbedsection}}
 
@@ -92,7 +93,7 @@ urlcolor=MyLinkColor}
 \newenvironment{subitems}{
   \renewcommand{\labelitemi}{-}
   \begin{itemize}
-      \setlength{\labelsep}{0.7em}
+      \setlength{\labelsep}{1em}
 }{\end{itemize}}
 
 \newenvironment{nobulletsubitems}{
@@ -209,7 +210,7 @@ urlcolor=MyLinkColor}
 \newenvironment{subitems}{
   \renewcommand{\labelitemi}{-}
   \begin{itemize}
-      \setlength{\labelsep}{0.7em}
+      \setlength{\labelsep}{1em}
 }{\end{itemize}}
 
 \newenvironment{nobulletsubitems}{
@@ -219,32 +220,15 @@ urlcolor=MyLinkColor}
 
 \newenvironment{resume_employer}[4]{
   \vspace{\secsep}
-  \textbf{#1} \hfill  {\color{YellowOrange} #3 \vspace{1 pt}}\\ 
-  \normalsize{\it #2} \hfill { \small {#4}} \\
+  \textbf{#1} \hfill  {\footnotesize#3 \vspace{1 pt}}\\ 
+  \normalsize{#2} \hfill { \footnotesize {#4}} \\
   \vspace{-15 pt} 
   \begin{tabbedsection}{0pt}
   \vspace{1.5pt}
   \begin{subitems}
-}{\end{subitems}\end{tabbedsection} \vspace{4pt}}
+}{\end{subitems}\end{tabbedsection} \vspace{2pt}}
 
 \begin{document}
-"""
-
-education = r"""
-\begin{resume_section}{Education}
-  
-  \begin{education}
-      {\textcolor{darkblue}{University of Waterloo} - \normalfont Candidate for BASc in Computer Engineering}{\bf 2020 - 2025} 
-
-    \begin{nobulletsubitems}
-      \item \textcolor{darkblue}{GPA}: {\bf 3.8}/4.0
-      \item \textcolor{darkblue}{Relevant Courses}: Real-time OS (C), Networks (C), Data Structures \& Algorithms (C++), Compilers (Java),\\ Databases (SQL), Hardware (Verilog)
-      \item \textcolor{darkblue}{Awards}: President’s Scholarship, Federated Co-op Community Leadership Award, Outstanding Intern
-    \end{nobulletsubitems}
-    
-  \end{education}
-  
-\end{resume_section}
 """
 
 end = r"\end{document}"

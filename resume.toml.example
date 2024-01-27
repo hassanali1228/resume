@@ -25,7 +25,7 @@ favicon = "Linkedin"
 [[profile.links]]
 display = "911"
 favicon = "Phone"
-link = "tel:+1000"
+url = "tel:+1000"
 
 [skills]
 Languages = ["Python", "C", "C++", "SQL", "JavaScript", "Java", "Verilog", "Bash"]
