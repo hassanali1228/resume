@@ -5,10 +5,10 @@ education_first = false
 role = "sre"
 
 [profile]
-name = "Hassan Ali Amjad"
+name = "Tommy Rambo"
 
 [[profile.links]]
-display = "hsnali.me"
+display = "tommy.what"
 url = "https://hsnali.me"
 favicon = "Globe"
 
@@ -18,8 +18,8 @@ url = "mailto:someone"
 favicon = "EnvelopeO"
 
 [[profile.links]]
-display = "LinkedIn/hassan"
-url = "https://www.linkedin.com/in/hassan-ali-amjad/"
+display = "LinkedIn/tommy"
+url = "https://www.linkedin.com/in/"
 favicon = "Linkedin"
 
 [[profile.links]]
@@ -130,19 +130,32 @@ sre = [0, 1, 2, 3]
 dev = "sre"
 
 [[projects]]
-name = "Real-Time OS for Intel DE1-SoC"
-tools = ["C", "x86 Assembly", "ARM"]
+name = "RTOS YESS"
+tools = ["C", "x86 Assembly"]
 content = [
     '''Did something''',
     '''Did something else'''
 ]
 
 [[projects]]
-name = "Tournament Tracker"
+name = "TT SIGMA"
 favicon = "link"
-url = "https://github.com/hassanali1228/Tournament-Score-Tracker"
+url = "https://github.com/"
 tools = ["Node.js", "SQL"]
 content = [
-    '''Did something else''',
+    '''Did something''',
     '''Did something else'''
 ]
+
+[education]
+school = "Carnegie Melon"
+degree = "Engineer 😎"
+date_range = "2020 - 2023"
+
+[[education.content]]
+key = "GPA"
+value = '''{\bf 4.5}/4.0'''
+
+[[education.content]]
+key = "Relevant Courses"
+value = '''Woo, Yeah, I, Love, Engineering'''
