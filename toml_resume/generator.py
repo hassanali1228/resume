@@ -181,9 +181,8 @@ def add_projects(writer: ResumeWriter, projects: list[dict]) -> None:
 
 def generator(
     toml_dict: dict,
-    enable_grayscale: bool,
+    colored_resume: bool,
     include_mission: bool,
-    education_first: bool,
     role: str,
 ) -> str:
     resume_writer = ResumeWriter()
@@ -196,39 +195,20 @@ def generator(
         "projects": (add_projects, resume_writer,),
     }
 
-    if enable_grayscale:
-        resume_writer.latex_str += grayscale_start
-    else:
+    if colored_resume:
         resume_writer.latex_str += start
+    else:
+        resume_writer.latex_str += grayscale_start
 
     resume_writer.add_line("")
 
     for section, content in toml_dict.items():
+        if section not in section_parser_mapping: continue
         (method, *params) = section_parser_mapping[section] # assign input variables needed for each fxn
 
         # call each section's parser
         method(*params, content)
         resume_writer.add_line("")
-
-
-    # add_profile(resume_writer, toml_dict["profile"])
-    # resume_writer.add_line("")
-
-    # if education_first:
-    #     add_education(resume_writer, toml_dict["education"])
-    # else:
-    #     add_skills(resume_writer, toml_dict["skills"])
-    # resume_writer.add_line("")
-
-    # add_work_experiences(resume_writer, toml_dict["work_experiences"], include_mission, role)
-
-    # add_projects(resume_writer, toml_dict["projects"])
-
-    # if education_first:
-    #     add_skills(resume_writer, toml_dict["skills"])
-    # else:
-    #     add_education(resume_writer, toml_dict["education"])
-    # resume_writer.add_line("")
 
     resume_writer.latex_str += end
 

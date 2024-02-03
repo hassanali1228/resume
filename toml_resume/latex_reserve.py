@@ -71,8 +71,8 @@ urlcolor=MyLinkColor}
 \newenvironment{resume_section}[1]{
   \filbreak
   \vspace{2\secsep}
-  \textbf{\color{YellowOrange}\Large#1 }
-  \textcolor{darkblue}{\lineunder}
+  \textbf{\color{YellowOrange}\Large#1 \hrulefill } \textcolor{white}{\lineunder} 
+  \vspace{-7pt}
   \begin{tabbedsection}{\secsep}
 }{\end{tabbedsection}}
 
@@ -190,6 +190,7 @@ urlcolor=MyLinkColor}
   \vspace{2\secsep}
   \textsc{\large#1}
   \lineunder
+  \vspace{-2pt}
   \begin{tabbedsection}{\secsep}
 }{\end{tabbedsection}}
 

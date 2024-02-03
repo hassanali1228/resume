@@ -9,6 +9,7 @@ packages = [{include = "toml_resume"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 toml = "^0.10.2"
+click = "^8.1.7"
 
 
 [build-system]
@@ -17,4 +18,4 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry.scripts]
-toml-resume = "toml_resume.generator:main"
+toml-resume = "toml_resume.cli:toml_resume"
